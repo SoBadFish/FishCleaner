@@ -42,14 +42,13 @@ public class TrashManager {
         }
     }
 
-    public boolean addItem(Item item){
+    public void addItem(Item item){
         for(TrashInventory trashInventory: trashInventories){
             if(trashInventory.canAdd(item)){
                 trashInventory.addItem(item);
-                return true;
+                return;
             }
         }
-        return false;
 
     }
 
@@ -57,7 +56,7 @@ public class TrashManager {
         public DoubleChestFakeInventory inventory = new DoubleChestFakeInventory(null);
 
         public Map<Integer,Item> getSlot(){
-            return inventory.slots;
+            return inventory.getContents();
         }
 
         public void update(DoubleChestFakeInventory dfc){
@@ -68,11 +67,10 @@ public class TrashManager {
             return inventory.canAddItem(item);
         }
 
-        public boolean addItem(Item item){
+        public void addItem(Item item){
             if(canAdd(item)){
                 inventory.addItem(item);
             }
-            return false;
         }
 
     }
