@@ -48,7 +48,7 @@ public class ClearRunnable extends PluginTask<ClearMainClass> {
 
         }else{
             runnable = ClearMainClass.clearSettingControl.time;
-           ClearManager.echoClearMessage();
+            ClearManager.echoClearMessage();
         }
     }
 }

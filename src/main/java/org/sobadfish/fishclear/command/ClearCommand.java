@@ -5,6 +5,7 @@ import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import org.sobadfish.fishclear.ClearMainClass;
 import org.sobadfish.fishclear.manager.ClearManager;
+import org.sobadfish.fishclear.manager.TrashManager;
 import org.sobadfish.fishclear.windows.DisPlayerPanel;
 import org.sobadfish.fishclear.windows.lib.ChestInventoryPanel;
 
@@ -32,6 +33,13 @@ public class ClearCommand extends Command {
         switch (strings[0]){
             case "help":
                 commandSender.sendMessage(ClearMainClass.formatString("&7/"+getName()+" open &a开启垃圾桶"));
+                if(commandSender.isOp()){
+                    commandSender.sendMessage(ClearMainClass.formatString("&7/"+getName()+" clear &a清空垃圾桶"));
+                }
+                break;
+            case "clear":
+                TrashManager.clear(0);
+                commandSender.sendMessage(ClearMainClass.TITLE+ClearMainClass.formatString("&a 垃圾箱已清空"));
                 break;
             case "open":
                 if(commandSender instanceof Player){
