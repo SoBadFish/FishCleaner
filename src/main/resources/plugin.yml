@@ -1,0 +1,6 @@
+name: FishClear
+version: 1.0.0
+main: org.sobadfish.fishclear.ClearMainClass
+api: 1.0.14
+author: Sobadfish
+load: POSTWORLD
