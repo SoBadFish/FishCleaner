@@ -10,6 +10,7 @@ import org.sobadfish.fishclear.config.TrashSettingControl;
 import org.sobadfish.fishclear.listener.ClearListener;
 import org.sobadfish.fishclear.manager.TrashManager;
 import org.sobadfish.fishclear.thread.ClearRunnable;
+import org.sobadfish.fishclear.windows.lib.AbstractFakeInventory;
 
 /**
  * @author Sobadfish
@@ -37,6 +38,7 @@ public class ClearMainClass extends PluginBase {
         mainClass = this;
         saveDefaultConfig();
         reloadConfig();
+        checkServer();
         long t1 = System.currentTimeMillis();
         TITLE = formatString(getConfig().getString("plugin-title"));
         clearSettingControl = ClearSettingControl.loadConfig(getConfig());
@@ -53,5 +55,29 @@ public class ClearMainClass extends PluginBase {
 
     public static String formatString(String msg){
         return TextFormat.colorize('&',msg);
+    }
+
+    private void checkServer(){
+        boolean ver = false;
+        //双核心兼容
+        try {
+            Class<?> c = Class.forName("cn.nukkit.Nukkit");
+            c.getField("NUKKIT_PM1E");
+            ver = true;
+
+        } catch (ClassNotFoundException | NoSuchFieldException ignore) { }
+        try {
+            Class<?> c = Class.forName("cn.nukkit.Nukkit");
+            c.getField("NUKKIT").get(c).toString().equalsIgnoreCase("Nukkit PetteriM1 Edition");
+            ver = true;
+        } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException ignore) {
+        }
+
+        AbstractFakeInventory.IS_PM1E = ver;
+        if(ver){
+            this.getLogger().info("&e核心 Nukkit PM1E");
+        }else{
+            this.getLogger().info("&e核心 Nukkit");
+        }
     }
 }
