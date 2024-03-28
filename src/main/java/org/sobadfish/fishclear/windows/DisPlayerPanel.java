@@ -30,7 +30,7 @@ public class DisPlayerPanel implements InventoryHolder {
 
 
 
-    public static DisPlayerPanel getDisPlayPanel(Player player,String name,Class<? extends ChestInventoryPanel> tClass){
+    public static DisPlayerPanel getDisPlayPanel(Player player,String name,int index,Class<? extends ChestInventoryPanel> tClass){
         try {
             DisPlayerPanel panel;
             if(!panelLib.containsKey(player)){
@@ -40,6 +40,7 @@ public class DisPlayerPanel implements InventoryHolder {
 
             Constructor<?> tConstructor = tClass.getConstructor(Player.class,InventoryHolder.class,String.class);
             panel.panel = (ChestInventoryPanel) tConstructor.newInstance(player,panel,name);
+            panel.panel.setPage(index);
             return panel;
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
             e.printStackTrace();

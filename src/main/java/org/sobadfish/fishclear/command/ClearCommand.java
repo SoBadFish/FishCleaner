@@ -62,12 +62,13 @@ public class ClearCommand extends Command {
                     }
 
                     if(commandSender instanceof Player){
+                        TrashManager.TrashInventory panel = ClearMainClass.trashManager.trashInventories.get(page);
                         DisPlayerPanel disPlayerPanel = DisPlayerPanel.getDisPlayPanel((Player) commandSender,ClearMainClass.messageSettingControl.message.variable.trashTitle
-                                .replace("${page}",page+""), ChestInventoryPanel.class);
-                        if(disPlayerPanel != null){
-                            disPlayerPanel.panel.setContents(ClearMainClass.trashManager.trashInventories.get(page).getSlot());
-                            disPlayerPanel.displayPlayer();
-                        }
+                                .replace("${page}",(page+1)+""),page, ChestInventoryPanel.class);
+                       if(disPlayerPanel != null){
+                           disPlayerPanel.panel.setContents(panel.getSlot());
+                           disPlayerPanel.displayPlayer();
+                       }
 
 
                     }

@@ -15,7 +15,7 @@ plugin-cmd: "fcl"
 # 示例: 地图1;地图2
 clear-settings:
   # 清理的时间间隔
-  time: 120
+  time: 300
   # 清理的地图
   clear-world: "ALL"
   # 清理生物配置
