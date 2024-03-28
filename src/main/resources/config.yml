@@ -43,6 +43,13 @@ trash-settings:
   # 垃圾桶的页数
   page-size: 15
 
+  # 过滤id 以下id的物品不进入垃圾桶
+  filter:
+    # NBT物品不在忽略id列表
+    ignoreNbt: true
+    # id列表
+    ids: []
+
 
 other-setting:
   # 控制玩家丢弃物品

@@ -55,21 +55,26 @@ public class ClearCommand extends Command {
                 commandSender.sendMessage(ClearMainClass.TITLE+ClearMainClass.formatString("&a 垃圾箱已清空"));
                 break;
             case "open":
-                page = 0;
-                if(strings.length > 1){
-                    page = getStringToPage(strings[1]);
-                }
-
-                if(commandSender instanceof Player){
-                    DisPlayerPanel disPlayerPanel = DisPlayerPanel.getDisPlayPanel((Player) commandSender,ClearMainClass.messageSettingControl.message.variable.trashTitle
-                            .replace("${page}",page+""), ChestInventoryPanel.class);
-                    if(disPlayerPanel != null){
-                        disPlayerPanel.panel.setContents(ClearMainClass.trashManager.trashInventories.get(page).getSlot());
-                        disPlayerPanel.displayPlayer();
+                if(ClearMainClass.trashSettingControl.enable){
+                    page = 0;
+                    if(strings.length > 1){
+                        page = getStringToPage(strings[1]);
                     }
 
-                    break;
+                    if(commandSender instanceof Player){
+                        DisPlayerPanel disPlayerPanel = DisPlayerPanel.getDisPlayPanel((Player) commandSender,ClearMainClass.messageSettingControl.message.variable.trashTitle
+                                .replace("${page}",page+""), ChestInventoryPanel.class);
+                        if(disPlayerPanel != null){
+                            disPlayerPanel.panel.setContents(ClearMainClass.trashManager.trashInventories.get(page).getSlot());
+                            disPlayerPanel.displayPlayer();
+                        }
+
+
+                    }
+                }else{
+                    commandSender.sendMessage(ClearMainClass.TITLE+ClearMainClass.formatString("&c 未开启垃圾桶功能"));
                 }
+                break;
 
             case "drop":
                 if(commandSender instanceof Player){

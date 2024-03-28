@@ -71,7 +71,20 @@ public class TrashManager {
         }
 
         public boolean canAdd(Item item){
-            return inventory.canAddItem(item);
+            boolean add = false;
+            if(ClearMainClass.trashSettingControl.ids.contains(item.getId()+"") ||
+                    ClearMainClass.trashSettingControl.ids.contains(item.getId()+":"+item.getDamage())
+            || ClearMainClass.trashSettingControl.ids.contains(item.getName())){
+                if(ClearMainClass.trashSettingControl.ignoreNbt && item.hasCompoundTag()){
+                   add = true;
+                }
+            }else{
+                add = true;
+            }
+            if(add){
+                add = inventory.canAddItem(item);
+            }
+            return add;
         }
 
         public void addItem(Item item){
