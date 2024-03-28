@@ -72,21 +72,15 @@ public class ClearCommand extends Command {
                 }
 
             case "drop":
-
                 if(commandSender instanceof Player){
-                    String levelName = ((Player) commandSender).level.getFolderName();
-                    OtherSettingControl.DropType dropType = ClearMainClass.otherSettingControl.getDropTypeByWorldName(levelName);
-                    if(dropType == OtherSettingControl.DropType.CMD){
-                        boolean b;
-                        if(ClearMainClass.otherSettingControl.playerDropSetting.containsKey(commandSender.getName())){
-                            b = ClearMainClass.otherSettingControl.playerDropSetting.get(commandSender.getName());
-                            ClearMainClass.otherSettingControl.playerDropSetting.put(commandSender.getName(),b = !b);
-                        }else{
-                            ClearMainClass.otherSettingControl.playerDropSetting.put(commandSender.getName(),b = true);
-                        }
-                        commandSender.sendMessage(ClearMainClass.TITLE+ClearMainClass.formatString("&e 已 "+(b?"&a允许":"&c禁止")+" &e丢物品"));
+                    boolean b;
+                    if(ClearMainClass.otherSettingControl.playerDropSetting.containsKey(commandSender.getName())){
+                        b = ClearMainClass.otherSettingControl.playerDropSetting.get(commandSender.getName());
+                        ClearMainClass.otherSettingControl.playerDropSetting.put(commandSender.getName(),b = !b);
+                    }else{
+                        ClearMainClass.otherSettingControl.playerDropSetting.put(commandSender.getName(),b = true);
                     }
-
+                    commandSender.sendMessage(ClearMainClass.TITLE+ClearMainClass.formatString("&e 已 "+(b?"&a允许":"&c禁止")+" &e丢物品"));
                 }
 
 
