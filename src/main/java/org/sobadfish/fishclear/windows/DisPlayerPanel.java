@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.inventory.Inventory;
 import cn.nukkit.inventory.InventoryHolder;
+import org.sobadfish.fishclear.windows.lib.AbstractFakeInventory;
 import org.sobadfish.fishclear.windows.lib.ChestInventoryPanel;
 
 
