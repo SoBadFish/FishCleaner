@@ -1,10 +1,11 @@
 package org.sobadfish.fishclear.windows.lib;
 
 import cn.nukkit.Player;
-import cn.nukkit.block.BlockChest;
+import cn.nukkit.block.BlockID;
 import cn.nukkit.blockentity.BlockEntity;
 import cn.nukkit.inventory.InventoryHolder;
 import cn.nukkit.inventory.InventoryType;
+import cn.nukkit.level.GlobalBlockPalette;
 import cn.nukkit.math.BlockVector3;
 import cn.nukkit.nbt.NBTIO;
 import cn.nukkit.nbt.tag.CompoundTag;
@@ -48,7 +49,13 @@ public class ChestFakeInventory extends AbstractFakeInventory{
 
     void placeChest(Player who, BlockVector3 pos) {
         UpdateBlockPacket updateBlock = new UpdateBlockPacket();
-        updateBlock.blockRuntimeId = new BlockChest().getRuntimeId();
+        if(IS_PM1E){
+            updateBlock.blockRuntimeId = GlobalBlockPalette.getOrCreateRuntimeId(who.protocol,BlockID.CHEST, 0);
+
+        }else{
+            updateBlock.blockRuntimeId = GlobalBlockPalette.getOrCreateRuntimeId(BlockID.CHEST, 0);
+        }
+
         updateBlock.flags = UpdateBlockPacket.FLAG_ALL_PRIORITY;
         updateBlock.x = pos.x;
         updateBlock.y = pos.y;

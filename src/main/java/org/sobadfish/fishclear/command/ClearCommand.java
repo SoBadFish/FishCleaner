@@ -4,7 +4,6 @@ import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
-import cn.nukkit.command.utils.EntitySelector;
 import org.sobadfish.fishclear.ClearMainClass;
 import org.sobadfish.fishclear.manager.ClearManager;
 import org.sobadfish.fishclear.manager.TrashManager;

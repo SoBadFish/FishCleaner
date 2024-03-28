@@ -4,15 +4,12 @@ import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.inventory.Inventory;
 import cn.nukkit.inventory.InventoryHolder;
-import org.sobadfish.fishclear.windows.items.BasePlayPanelItemInstance;
-import org.sobadfish.fishclear.windows.lib.AbstractFakeInventory;
 import org.sobadfish.fishclear.windows.lib.ChestInventoryPanel;
 
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * 发送窗口
