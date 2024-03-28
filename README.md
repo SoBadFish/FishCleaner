@@ -128,5 +128,5 @@ msg-settings:
     # 当玩家可以用指令开关时提示此文本
     control: "可通过指令 ${control-cmd} 关闭"
 
-...
+```
 
