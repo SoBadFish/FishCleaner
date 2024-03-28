@@ -111,7 +111,7 @@ public class ChestInventoryPanel extends DoubleChestFakeInventory implements Inv
             ChestInventoryPanel pc = pe.getValue().panel;
             if(pc.page == this.page){
                 if(pc != this) {
-                    pc.slots.putAll(ClearMainClass.trashManager.trashInventories.get(pc.page).getSlot());
+                    tr.inventory.setContents(getContents());
                     pc.sendContents(pe.getKey());
                 }
             }
