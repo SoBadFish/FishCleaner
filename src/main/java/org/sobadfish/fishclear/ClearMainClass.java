@@ -33,11 +33,14 @@ public class ClearMainClass extends PluginBase {
 
     public static TrashManager trashManager;
 
+    public static String PLUGIN_CMD = "fcl";
+
     @Override
     public void onEnable() {
         mainClass = this;
         saveDefaultConfig();
         reloadConfig();
+        PLUGIN_CMD = getConfig().getString("plugin-cmd","fcl");
         checkServer();
         long t1 = System.currentTimeMillis();
         TITLE = formatString(getConfig().getString("plugin-title"));
@@ -47,7 +50,7 @@ public class ClearMainClass extends PluginBase {
         trashSettingControl = TrashSettingControl.loadConfig(getConfig());
         trashManager = new TrashManager(trashSettingControl.size);
         this.getServer().getPluginManager().registerEvents(new ClearListener(),this);
-        this.getServer().getCommandMap().register("clear",new ClearCommand("fcl","清道夫主指令"));
+        this.getServer().getCommandMap().register("clear",new ClearCommand(PLUGIN_CMD,"清道夫主指令"));
         this.getServer().getScheduler().scheduleRepeatingTask(this,new ClearRunnable(this),20);
         this.getLogger().info(TITLE+" 插件启动完成 用时: "+(System.currentTimeMillis() - t1)+" ms");
 

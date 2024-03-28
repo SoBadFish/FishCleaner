@@ -3,16 +3,16 @@ package org.sobadfish.fishclear.config;
 import cn.nukkit.level.Level;
 import cn.nukkit.utils.Config;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Sobadfish
  * @date 2022/11/25
  */
 public class OtherSettingControl {
+
+    //玩家指令设置是否丢弃
+    public LinkedHashMap<String,Boolean> playerDropSetting = new LinkedHashMap<>();
 
     public LinkedHashMap<DropType, List<String>> controlDrop = new LinkedHashMap<>();
 
@@ -46,6 +46,20 @@ public class OtherSettingControl {
         otherSettingControl.itemTiming = timing;
 
         return otherSettingControl;
+    }
+
+    public DropType getDropTypeByWorldName(String worldName) {
+        for (Map.Entry<DropType,List<String>> dropTypeListEntry : controlDrop.entrySet()){
+            if(dropTypeListEntry.getValue().size() > 0){
+                if(dropTypeListEntry.getValue().contains(worldName)){
+                    return dropTypeListEntry.getKey();
+                }
+            }else{
+                return dropTypeListEntry.getKey();
+            }
+
+        }
+        return DropType.NULL;
     }
 
     public static class ItemTiming{

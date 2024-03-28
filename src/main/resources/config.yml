@@ -6,6 +6,8 @@
 # 插件所有提示的前缀
 plugin-title: "&7[ &a清道夫 &7]"
 
+plugin-cmd: "fcl"
+
 # 清理设置选项
 # time 清理间隔 单位(s)
 # clearWorld 清理的世界 ALL为全部

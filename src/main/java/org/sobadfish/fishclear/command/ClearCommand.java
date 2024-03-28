@@ -1,10 +1,10 @@
 package org.sobadfish.fishclear.command;
 
 import cn.nukkit.Player;
-import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import org.sobadfish.fishclear.ClearMainClass;
+import org.sobadfish.fishclear.config.OtherSettingControl;
 import org.sobadfish.fishclear.manager.ClearManager;
 import org.sobadfish.fishclear.manager.TrashManager;
 import org.sobadfish.fishclear.windows.DisPlayerPanel;
@@ -70,6 +70,27 @@ public class ClearCommand extends Command {
 
                     break;
                 }
+
+            case "drop":
+
+                if(commandSender instanceof Player){
+                    String levelName = ((Player) commandSender).level.getFolderName();
+                    OtherSettingControl.DropType dropType = ClearMainClass.otherSettingControl.getDropTypeByWorldName(levelName);
+                    if(dropType == OtherSettingControl.DropType.CMD){
+                        boolean b;
+                        if(ClearMainClass.otherSettingControl.playerDropSetting.containsKey(commandSender.getName())){
+                            b = ClearMainClass.otherSettingControl.playerDropSetting.get(commandSender.getName());
+                            ClearMainClass.otherSettingControl.playerDropSetting.put(commandSender.getName(),b = !b);
+                        }else{
+                            ClearMainClass.otherSettingControl.playerDropSetting.put(commandSender.getName(),b = true);
+                        }
+                        commandSender.sendMessage(ClearMainClass.TITLE+ClearMainClass.formatString("&e 已 "+(b?"&a允许":"&c禁止")+" &e丢物品"));
+                    }
+
+                }
+
+
+                break;
 
             default:
                 commandSender.sendMessage(ClearMainClass.TITLE+ClearMainClass.formatString("&c 请执行/"+getName()+" help 查看帮助"));
