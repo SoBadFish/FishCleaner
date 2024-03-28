@@ -16,6 +16,7 @@ import cn.nukkit.item.Item;
 import org.sobadfish.fishclear.ClearMainClass;
 import org.sobadfish.fishclear.config.OtherSettingControl;
 import org.sobadfish.fishclear.entity.FakeEntityItem;
+import org.sobadfish.fishclear.manager.TrashManager;
 import org.sobadfish.fishclear.windows.items.BasePlayPanelItemInstance;
 import org.sobadfish.fishclear.windows.lib.ChestInventoryPanel;
 
@@ -68,6 +69,14 @@ public class ClearListener implements Listener {
             default:
                 break;
 
+        }
+        if(!event.isCancelled()){
+            if(ClearMainClass.otherSettingControl.addTrash){
+                event.setCancelled();
+                player.getInventory().removeItem(event.getItem());
+                ClearMainClass.trashManager.addItem(event.getItem());
+
+            }
         }
 
 
