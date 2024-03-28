@@ -55,6 +55,7 @@ public class TrashManager {
     public static class TrashInventory{
         public DoubleChestFakeInventory inventory = new DoubleChestFakeInventory(null);
 
+
         public Map<Integer,Item> getSlot(){
             return inventory.getContents();
         }

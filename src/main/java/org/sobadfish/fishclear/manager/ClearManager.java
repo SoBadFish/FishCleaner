@@ -3,6 +3,7 @@ package org.sobadfish.fishclear.manager;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.entity.Entity;
+import cn.nukkit.entity.EntityHuman;
 import cn.nukkit.entity.item.EntityItem;
 import cn.nukkit.entity.mob.EntityMob;
 import cn.nukkit.entity.passive.EntityAnimal;
@@ -36,6 +37,10 @@ public class ClearManager {
             if(ClearMainClass.clearSettingControl.entityClearSetting.enable){
                 if(ClearMainClass.clearSettingControl.entityClearSetting.clearWorld.contains(level)){
                     for(Entity entity1: entity){
+                        //NPC直接过滤
+                        if(entity1 instanceof EntityHuman){
+                            continue;
+                        }
                         if(chunkFilter(entity1,ClearMainClass.clearSettingControl.entityClearSetting.filter)){
                             entity1.close();
                             clearCount.entity++;

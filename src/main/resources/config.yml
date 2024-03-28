@@ -69,7 +69,7 @@ msg-settings:
   only-display-player: true
   # 信息提示
   message:
-    running-msg: "&e扫地大妈将在 ${time} 秒后清理地上的掉落物"
+    running-msg: "&e扫地大妈将在 ${time} 秒后清理 ${world-name} 地上的掉落物"
 
     clear-success-msg: "&a扫地大妈已将 ${world-name} 打扫干净 共计 ${count-item}"
 

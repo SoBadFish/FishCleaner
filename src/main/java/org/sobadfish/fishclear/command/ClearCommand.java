@@ -1,8 +1,10 @@
 package org.sobadfish.fishclear.command;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
+import cn.nukkit.command.utils.EntitySelector;
 import org.sobadfish.fishclear.ClearMainClass;
 import org.sobadfish.fishclear.manager.ClearManager;
 import org.sobadfish.fishclear.manager.TrashManager;
@@ -23,6 +25,7 @@ public class ClearCommand extends Command {
     public boolean execute(CommandSender commandSender, String s, String[] strings) {
         if(strings.length == 0){
             if(commandSender.isOp()){
+
                 ClearManager.echoClearMessage();
                 return true;
             }else{
