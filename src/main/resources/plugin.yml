@@ -1,5 +1,5 @@
 name: FishClear
-version: 1.0.2
+version: 1.0.3
 main: org.sobadfish.fishclear.ClearMainClass
 api: 1.0.14
 author: Sobadfish
