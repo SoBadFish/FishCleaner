@@ -24,11 +24,7 @@ public class TrashSettingControl {
         trashSettingControl.enable = config.getBoolean("trash-settings.enable");
         trashSettingControl.size = config.getInt("trash-settings.page-size");
         trashSettingControl.ignoreNbt = config.getBoolean("trash-settings.ignoreNbt",true);
-        List<String> val = new ArrayList<>();
-        for(Object id : config.getList("trash-settings.ids")){
-            val.add(id.toString());
-        }
-        trashSettingControl.ids = val;
+        trashSettingControl.ids = new ArrayList<>(config.getStringList("trash-settings.ids"));
 
         return trashSettingControl;
     }
