@@ -12,6 +12,8 @@ import org.sobadfish.fishclear.manager.TrashManager;
 import org.sobadfish.fishclear.thread.ClearRunnable;
 import org.sobadfish.fishclear.windows.lib.AbstractFakeInventory;
 
+import java.util.Arrays;
+
 /**
  * @author Sobadfish
  * @date 2022/11/25
@@ -67,12 +69,13 @@ public class ClearMainClass extends PluginBase {
             Class<?> c = Class.forName("cn.nukkit.Nukkit");
             c.getField("NUKKIT_PM1E");
             ver = true;
-
         } catch (ClassNotFoundException | NoSuchFieldException ignore) { }
         try {
             Class<?> c = Class.forName("cn.nukkit.Nukkit");
-            c.getField("NUKKIT").get(c).toString().equalsIgnoreCase("Nukkit PetteriM1 Edition");
-            ver = true;
+            String[] cores = new String[]{"Nukkit MOT","Nukkit PetteriM1 Edition"};
+            String vl = c.getField("NUKKIT").get(c).toString();
+
+            ver = Arrays.asList(cores).contains(vl);
         } catch (ClassNotFoundException | NoSuchFieldException | IllegalAccessException ignore) {
         }
 
