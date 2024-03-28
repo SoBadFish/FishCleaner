@@ -44,11 +44,18 @@ public class ClearCommand extends Command {
                 commandSender.sendMessage(ClearMainClass.TITLE+ClearMainClass.formatString("&a 垃圾箱已清空"));
                 break;
             case "open":
+                int page = 1;
+                try{
+                    page = Integer.parseInt(strings[1]);
+                }catch (Exception ignore){}
+                if(page >= ClearMainClass.trashManager.trashInventories.size()){
+                    page = ClearMainClass.trashManager.trashInventories.size() - 1;
+                }
                 if(commandSender instanceof Player){
                     DisPlayerPanel disPlayerPanel = DisPlayerPanel.getDisPlayPanel((Player) commandSender,ClearMainClass.messageSettingControl.message.variable.trashTitle
-                            .replace("${page}","1"), ChestInventoryPanel.class);
+                            .replace("${page}",page+""), ChestInventoryPanel.class);
                     if(disPlayerPanel != null){
-                        disPlayerPanel.panel.setContents(ClearMainClass.trashManager.trashInventories.get(0).getSlot());
+                        disPlayerPanel.panel.setContents(ClearMainClass.trashManager.trashInventories.get(page).getSlot());
                         disPlayerPanel.displayPlayer();
                     }
 
