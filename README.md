@@ -23,7 +23,7 @@
 
 - `/fcl`: 管理员执行清理指令
 - `/fcl open <page>`: 开启垃圾站
-- `/fcl clean <page>/all`: 清理垃圾站
+- `/fcl clear <page>/all`: 清理垃圾站
 - `/fcl drop`: 开启/关闭 丢弃物品
 
 ## 配置文件
