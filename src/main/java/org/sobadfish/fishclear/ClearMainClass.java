@@ -75,9 +75,9 @@ public class ClearMainClass extends PluginBase {
 
         AbstractFakeInventory.IS_PM1E = ver;
         if(ver){
-            this.getLogger().info("&e核心 Nukkit PM1E");
+            this.getLogger().info(formatString("&e核心 Nukkit PM1E"));
         }else{
-            this.getLogger().info("&e核心 Nukkit");
+            this.getLogger().info(formatString("&e核心 Nukkit"));
         }
     }
 }
