@@ -36,21 +36,30 @@ public class ClearCommand extends Command {
             case "help":
                 commandSender.sendMessage(ClearMainClass.formatString("&7/"+getName()+" open &a开启垃圾桶"));
                 if(commandSender.isOp()){
-                    commandSender.sendMessage(ClearMainClass.formatString("&7/"+getName()+" clear &a清空垃圾桶"));
+                    commandSender.sendMessage(ClearMainClass.formatString("&7/"+getName()+" clear <page>/all &a清空垃圾桶"));
                 }
                 break;
             case "clear":
-                TrashManager.clear(0);
+                int page = 0;
+                if(strings.length > 1){
+                    if("all".equalsIgnoreCase(strings[1])){
+                        //清空全部
+                        TrashManager.clearAll();
+
+                        commandSender.sendMessage(ClearMainClass.TITLE+ClearMainClass.formatString("&a 垃圾箱已全部清空"));
+                    }
+                    page = getStringToPage(strings[1]);
+                }
+
+                TrashManager.clear(page);
                 commandSender.sendMessage(ClearMainClass.TITLE+ClearMainClass.formatString("&a 垃圾箱已清空"));
                 break;
             case "open":
-                int page = 1;
-                try{
-                    page = Integer.parseInt(strings[1]);
-                }catch (Exception ignore){}
-                if(page >= ClearMainClass.trashManager.trashInventories.size()){
-                    page = ClearMainClass.trashManager.trashInventories.size() - 1;
+                page = 0;
+                if(strings.length > 1){
+                    page = getStringToPage(strings[1]);
                 }
+
                 if(commandSender instanceof Player){
                     DisPlayerPanel disPlayerPanel = DisPlayerPanel.getDisPlayPanel((Player) commandSender,ClearMainClass.messageSettingControl.message.variable.trashTitle
                             .replace("${page}",page+""), ChestInventoryPanel.class);
@@ -67,5 +76,20 @@ public class ClearCommand extends Command {
                 break;
         }
         return true;
+    }
+
+    private int getStringToPage(String value){
+        int page = 1;
+        try{
+            page = Integer.parseInt(value);
+        }catch (Exception ignore){}
+        if(page >= ClearMainClass.trashManager.trashInventories.size()){
+            page = ClearMainClass.trashManager.trashInventories.size();
+        }
+        page -= 1;
+        if(page < 0){
+            page = 0;
+        }
+        return page;
     }
 }

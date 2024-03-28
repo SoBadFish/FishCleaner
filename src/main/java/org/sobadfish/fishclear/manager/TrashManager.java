@@ -29,6 +29,12 @@ public class TrashManager {
         }
     }
 
+    public static void clearAll(){
+        for (int i = 0;i < ClearMainClass.trashManager.trashInventories.size();i++){
+            clear(i);
+        }
+    }
+
     public TrashInventory get(int index){
         if(trashInventories.size() > index){
             return trashInventories.get(index);
