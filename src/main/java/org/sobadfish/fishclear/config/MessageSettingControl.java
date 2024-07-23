@@ -34,6 +34,7 @@ public class MessageSettingControl {
         message.dropCancelMsg = ClearMainClass.formatString(config.getString("msg-settings.message.drop-cancel"));
         message.dropOpenMsg = ClearMainClass.formatString(config.getString("msg-settings.message.drop-open"));
         message.dropCloseMsg = ClearMainClass.formatString(config.getString("msg-settings.message.drop-close"));
+        message.clearLimitMsg = ClearMainClass.formatString(config.getString("msg-settings.message.clear-limit"));
 
         Message.MessageVariable mv = new Message.MessageVariable();
 
@@ -81,6 +82,8 @@ public class MessageSettingControl {
         public String dropOpenMsg;
 
         public String dropCloseMsg;
+
+        public String clearLimitMsg;
 
         public MessageVariable variable;
 

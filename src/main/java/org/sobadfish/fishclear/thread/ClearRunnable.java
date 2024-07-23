@@ -2,6 +2,8 @@ package org.sobadfish.fishclear.thread;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.entity.Entity;
+import cn.nukkit.entity.item.EntityItem;
 import cn.nukkit.level.Level;
 import cn.nukkit.scheduler.PluginTask;
 import org.sobadfish.fishclear.ClearMainClass;
@@ -50,5 +52,38 @@ public class ClearRunnable extends PluginTask<ClearMainClass> {
             runnable = ClearMainClass.clearSettingControl.time;
             ClearManager.echoClearMessage();
         }
+        if(ClearMainClass.clearItemLimitControl.clearItemSetting.limit > 0){
+            //TODO 遍历地图检测
+            for(Level level: ClearMainClass.clearSettingControl.clearWorld) {
+                int count = 0;
+                ArrayList<EntityItem> entityItems = new ArrayList<>();
+                for(Entity entity1: level.getEntities()){
+                    if(entity1 instanceof EntityItem){
+                        count++;
+                        entityItems.add((EntityItem) entity1);
+                    }
+                }
+                if(count >= ClearMainClass.clearItemLimitControl.clearItemSetting.limit){
+                    for(EntityItem entityItem: entityItems){
+                        if(ClearMainClass.clearSettingControl.addTrashWorld.contains(level)){
+                            ClearMainClass.trashManager.addItem(entityItem.getItem());
+                        }
+                        entityItem.close();
+                    }
+                    String msg =  ClearMainClass.formatString(message.clearLimitMsg
+                            .replace("${world-name}",level.getFolderName())
+                            .replace("${limit}",ClearMainClass.clearItemLimitControl.clearItemSetting.limit+"")
+                          );
+                    if(ClearMainClass.messageSettingControl.onlyDisplay){
+                        for(Player player: level.getPlayers().values()){
+                            MessageManager.echoToPlayer(player,msg);
+                        }
+                    }else{
+                        Server.getInstance().broadcastMessage(ClearMainClass.TITLE+msg);
+                    }
+                }
+            }
+        }
+
     }
 }

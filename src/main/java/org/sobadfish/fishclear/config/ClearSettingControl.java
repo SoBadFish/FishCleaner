@@ -46,7 +46,7 @@ public class ClearSettingControl {
         return clearSettingControl;
     }
 
-    private static ArrayList<Level> getLevelListByName(String levelMsg){
+    public static ArrayList<Level> getLevelListByName(String levelMsg){
         ArrayList<Level> cw = new ArrayList<>();
         if("all".equalsIgnoreCase(levelMsg)){
             cw.addAll(Server.getInstance().getLevels().values());

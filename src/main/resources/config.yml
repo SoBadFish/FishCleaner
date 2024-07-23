@@ -18,6 +18,8 @@ clear-settings:
   time: 300
   # 清理的地图
   clear-world: "ALL"
+
+
   # 清理生物配置
   clear-entity:
     # 是否清理生物
@@ -67,6 +69,11 @@ other-setting:
     enable: true
     # 时间 单位秒
     time: 300
+  # 检测地图掉落物数量 如果大于这个数值则立即清理物品
+  # -1 代表不限制
+  clear-item-limit:
+    world: "ALL"
+    limit: 500
 
 
 
@@ -80,6 +87,7 @@ msg-settings:
   message:
     running-msg: "&e扫地大妈将在 ${time} 秒后清理 ${world-name} 地上的掉落物"
 
+    # ${count-entity} 为清理生物的数量
     clear-success-msg: "&a扫地大妈已将 ${world-name} 打扫干净 共计 ${count-item}"
 
     drop-cancel: "&c${world-name} 不允许丢弃物品 ${control}"
@@ -87,6 +95,8 @@ msg-settings:
     drop-open: "&7你已开启在 ${world-name} 丢掉物品"
 
     drop-close: "&7你已关闭在 ${world-name} 丢掉物品"
+
+    clear-limit: "&c${world-name} &7超过&a ${limit} &7个物品，已清理"
   # 变量文本
   variable:
     # x代表数量不要将这个删除
