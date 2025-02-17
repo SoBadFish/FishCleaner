@@ -2,6 +2,7 @@ package org.sobadfish.fishclear.manager;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.command.CommandSender;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.EntityHuman;
 import cn.nukkit.entity.item.EntityItem;
@@ -39,6 +40,10 @@ public class ClearManager {
                     for(Entity entity1: entity){
                         //NPC直接过滤
                         if(entity1 instanceof EntityHuman){
+                            continue;
+                        }
+                        //居然还能清理玩家
+                        if(entity1 instanceof CommandSender){
                             continue;
                         }
                         if(chunkFilter(entity1,ClearMainClass.clearSettingControl.entityClearSetting.filter)){

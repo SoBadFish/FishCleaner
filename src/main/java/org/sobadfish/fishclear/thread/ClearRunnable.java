@@ -58,10 +58,14 @@ public class ClearRunnable extends PluginTask<ClearMainClass> {
                 int count = 0;
                 ArrayList<EntityItem> entityItems = new ArrayList<>();
                 for(Entity entity1: level.getEntities()){
+                    if(entity1 instanceof Player){
+                        continue;
+                    }
                     if(entity1 instanceof EntityItem){
                         count++;
                         entityItems.add((EntityItem) entity1);
                     }
+
                 }
                 if(count >= ClearMainClass.clearItemLimitControl.clearItemSetting.limit){
                     for(EntityItem entityItem: entityItems){
