@@ -83,6 +83,18 @@ msg-settings:
   display-type: "tip"
   # 避免控制台刷屏 只发送给在当前世界的玩家
   only-display-player: true
+  # 显示控制
+  display:
+    # 清理间隔提示
+    interval-msg: true
+    # 清理成功提示
+    clear-success: true
+    # 丢弃物品控制提示
+    drop-control: true
+    # 清理生物提示
+    clear-entity: true
+
+
   # 信息提示
   message:
     running-msg: "&e扫地大妈将在 ${time} 秒后清理 ${world-name} 地上的掉落物"

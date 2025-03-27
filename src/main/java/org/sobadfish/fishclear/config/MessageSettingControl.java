@@ -16,6 +16,8 @@ public class MessageSettingControl {
     public Message message;
 
 
+
+
     public static MessageSettingControl loadConfig(Config config){
         MessageSettingControl messageSettingControl = new MessageSettingControl();
         MessageType t = null;
@@ -69,6 +71,17 @@ public class MessageSettingControl {
          * Message显示
          * */
         MSG
+    }
+
+    public static class DisplaySetting{
+        //清理间隔提示
+        public boolean intervalMsg;
+        //清理完成提示
+        public boolean clearMsg;
+        //掉落取消提示
+        public boolean dropItem;
+        // 清理掉落物
+
     }
 
     public static class Message{
