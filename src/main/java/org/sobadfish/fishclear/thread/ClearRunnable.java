@@ -3,7 +3,9 @@ package org.sobadfish.fishclear.thread;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.entity.Entity;
+import cn.nukkit.entity.EntityHuman;
 import cn.nukkit.entity.item.EntityItem;
+import cn.nukkit.entity.projectile.EntityProjectile;
 import cn.nukkit.level.Level;
 import cn.nukkit.scheduler.PluginTask;
 import org.sobadfish.fishclear.ClearMainClass;
@@ -59,6 +61,12 @@ public class ClearRunnable extends PluginTask<ClearMainClass> {
                 ArrayList<EntityItem> entityItems = new ArrayList<>();
                 for(Entity entity1: level.getEntities()){
                     if(entity1 instanceof Player){
+                        continue;
+                    }
+                    if(entity1 instanceof EntityHuman){
+                        continue;
+                    }
+                    if(entity1 instanceof EntityProjectile){
                         continue;
                     }
                     if(entity1 instanceof EntityItem){

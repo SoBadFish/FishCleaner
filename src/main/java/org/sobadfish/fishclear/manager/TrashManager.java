@@ -68,6 +68,7 @@ public class TrashManager {
 
         public void update(DoubleChestFakeInventory dfc){
             inventory.setContents(dfc.getContents());
+            inventory.sendContents(dfc.getViewers());
         }
 
         public boolean canAdd(Item item){

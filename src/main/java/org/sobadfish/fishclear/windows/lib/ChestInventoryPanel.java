@@ -110,10 +110,10 @@ public class ChestInventoryPanel extends DoubleChestFakeInventory implements Inv
         for(Map.Entry<Player,DisPlayerPanel> pe: DisPlayerPanel.panelLib.entrySet()){
             ChestInventoryPanel pc = pe.getValue().panel;
             if(pc.page == this.page){
-                if(pc != this) {
-                    tr.inventory.setContents(getContents());
-                    pc.sendContents(pe.getKey());
-                }
+//                if(pc != this) {
+                tr.inventory.setContents(getContents());
+                pc.sendContents(pe.getKey());
+//                }
             }
         }
     }
