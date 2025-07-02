@@ -73,7 +73,13 @@ public abstract class AbstractFakeInventory extends ContainerInventory {
     public void onClose(Player who) {
         super.onClose(who);
         OPEN.remove(who, this);
+        if(!blockPositions.containsKey(who)){
+            return;
+        }
         List<BlockVector3> blocks = blockPositions.get(who);
+        if(blocks == null) {
+            return;
+        }
         for (int i = 0, size = blocks.size(); i < size; i++) {
             final int index = i;
             service.execute(() -> {
