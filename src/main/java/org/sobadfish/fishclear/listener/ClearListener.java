@@ -100,21 +100,19 @@ public class ClearListener implements Listener {
         Item getFromChest = null;
         Item putToChest = null;
         Item putToPlayer = null;
-        ChestInventoryPanel chestInventoryPanel = null;
         for (InventoryAction action : transaction.getActions()) {
             for (Inventory inventory : transaction.getInventories()) {
-                if (inventory instanceof ChestInventoryPanel panel) {
-                    chestInventoryPanel = panel;
+                if (inventory instanceof ChestInventoryPanel chestInventoryPanel) {
                     Item i = action.getSourceItem();
                     if (i.hasCompoundTag()) {
                         if (i.getNamedTag().contains("index") && i.getNamedTag().contains("button")) {
                             event.setCancelled();
                             int index = i.getNamedTag().getInt("index");
-                            BasePlayPanelItemInstance item = panel.getPanel().getOrDefault(index, null);
+                            BasePlayPanelItemInstance item = chestInventoryPanel.getPanel().getOrDefault(index, null);
                             if (item != null) {
-                                panel.clickSolt = index;
-                                item.onClick(panel, player);
-                                panel.update();
+                                chestInventoryPanel.clickSolt = index;
+                                item.onClick(chestInventoryPanel, player);
+                                chestInventoryPanel.update();
                             }
                         }
 
