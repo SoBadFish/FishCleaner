@@ -1,10 +1,10 @@
 package org.sobadfish.fishclear.command;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import org.sobadfish.fishclear.ClearMainClass;
-import org.sobadfish.fishclear.config.OtherSettingControl;
 import org.sobadfish.fishclear.manager.ClearManager;
 import org.sobadfish.fishclear.manager.TrashManager;
 import org.sobadfish.fishclear.windows.DisPlayerPanel;
@@ -67,9 +67,8 @@ public class ClearCommand extends Command {
                                 .replace("${page}",(page+1)+""),page, ChestInventoryPanel.class);
                        if(disPlayerPanel != null){
                            disPlayerPanel.panel.setContents(panel.getSlot());
-                           disPlayerPanel.displayPlayer();
+                           Server.getInstance().getScheduler().scheduleDelayedTask(ClearMainClass.mainClass, disPlayerPanel::displayPlayer, 10);
                        }
-
 
                     }
                 }else{

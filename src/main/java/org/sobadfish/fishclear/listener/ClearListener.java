@@ -1,7 +1,6 @@
 package org.sobadfish.fishclear.listener;
 
 import cn.nukkit.Player;
-import cn.nukkit.entity.EntityHuman;
 import cn.nukkit.entity.item.EntityItem;
 import cn.nukkit.event.EventHandler;
 import cn.nukkit.event.Listener;
@@ -12,15 +11,21 @@ import cn.nukkit.inventory.Inventory;
 import cn.nukkit.inventory.PlayerInventory;
 import cn.nukkit.inventory.transaction.InventoryTransaction;
 import cn.nukkit.inventory.transaction.action.InventoryAction;
+import cn.nukkit.inventory.transaction.action.SlotChangeAction;
 import cn.nukkit.item.Item;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.ObjectList;
 import org.sobadfish.fishclear.ClearMainClass;
 import org.sobadfish.fishclear.config.OtherSettingControl;
 import org.sobadfish.fishclear.entity.FakeEntityItem;
-import org.sobadfish.fishclear.manager.TrashManager;
 import org.sobadfish.fishclear.windows.items.BasePlayPanelItemInstance;
 import org.sobadfish.fishclear.windows.lib.ChestInventoryPanel;
 
-import java.lang.reflect.Field;
+import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Sobadfish
@@ -78,35 +83,72 @@ public class ClearListener implements Listener {
 
             }
         }
-
-
     }
+
+    /**
+     * 用于缓存玩家从箱子中获取的物品
+     */
+    private static final Cache<String, ObjectList<Item>> PLAYER_GET_ITEM_CACHE = Caffeine.newBuilder()
+            .expireAfterAccess(10, TimeUnit.MINUTES)
+            .build();
 
     @EventHandler
     public void onItemChange(InventoryTransactionEvent event) {
         //预计做翻页
         InventoryTransaction transaction = event.getTransaction();
+        Player player = transaction.getSource();
+        Item getFromChest = null;
+        Item putToChest = null;
+        Item putToPlayer = null;
         for (InventoryAction action : transaction.getActions()) {
             for (Inventory inventory : transaction.getInventories()) {
-                if (inventory instanceof ChestInventoryPanel) {
-                    Player player = ((ChestInventoryPanel) inventory).getPlayer();
+                if (inventory instanceof ChestInventoryPanel chestInventoryPanel) {
                     Item i = action.getSourceItem();
-                    if(i.hasCompoundTag()){
-                        if(i.getNamedTag().contains("index") && i.getNamedTag().contains("button")){
+                    if (i.hasCompoundTag()) {
+                        if (i.getNamedTag().contains("index") && i.getNamedTag().contains("button")) {
                             event.setCancelled();
                             int index = i.getNamedTag().getInt("index");
-                            BasePlayPanelItemInstance item = ((ChestInventoryPanel) inventory).getPanel().getOrDefault(index,null);
-                            if(item != null){
-                                ((ChestInventoryPanel) inventory).clickSolt = index;
-                                item.onClick((ChestInventoryPanel) inventory,player);
-                                ((ChestInventoryPanel) inventory).update();
+                            BasePlayPanelItemInstance item = chestInventoryPanel.getPanel().getOrDefault(index, null);
+                            if (item != null) {
+                                chestInventoryPanel.clickSolt = index;
+                                item.onClick(chestInventoryPanel, player);
+                                chestInventoryPanel.update();
                             }
                         }
 
+                    } else if (action instanceof SlotChangeAction slotChangeAction) {
+                        if (slotChangeAction.getInventory() instanceof ChestInventoryPanel) {
+                            if (!i.isNull() && action.getTargetItem().isNull()) {
+                                getFromChest = i.clone();
+                            } else if (i.isNull() && !action.getTargetItem().isNull()) {
+                                putToChest = action.getTargetItem().clone();
+                            }
+                        }
                     }
 
+                } else if (action instanceof SlotChangeAction slotChangeAction) {
+                    if (slotChangeAction.getInventory() instanceof PlayerInventory
+                            && action.getSourceItem().isNull()
+                            && !action.getTargetItem().isNull()) {
+                        putToPlayer = action.getTargetItem().clone();
+                    }
                 }
             }
+        }
+        ObjectList<Item> getItems = PLAYER_GET_ITEM_CACHE.get(player.getName(), (k) -> new ObjectArrayList<>());
+        if (getFromChest != null && !getFromChest.isNull()) {
+            getItems.add(getFromChest);
+        }
+        if (putToChest != null && !putToChest.isNull()) {
+            getItems.remove(putToChest);
+        }
+        Optional<Inventory> topWindow = transaction.getSource().getTopWindow();
+        if (getItems.contains(putToPlayer) && topWindow.isPresent() && topWindow.get() instanceof ChestInventoryPanel) {
+            getItems.remove(putToPlayer);
+            if (ThreadLocalRandom.current().nextInt(100) < 5) {
+                player.awardAchievement("FishClear_WIS");
+            }
+            player.awardAchievement("FishClear_TFF");
         }
     }
 
