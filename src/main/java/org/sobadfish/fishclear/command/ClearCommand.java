@@ -10,6 +10,8 @@ import org.sobadfish.fishclear.manager.TrashManager;
 import org.sobadfish.fishclear.windows.DisPlayerPanel;
 import org.sobadfish.fishclear.windows.lib.ChestInventoryPanel;
 
+import java.util.LinkedHashMap;
+
 /**
  * @author Sobadfish
  * @date 2022/11/25
@@ -19,6 +21,7 @@ public class ClearCommand extends Command {
     public ClearCommand(String name, String description) {
         super(name, description);
     }
+
 
     @Override
     public boolean execute(CommandSender commandSender, String s, String[] strings) {
@@ -69,6 +72,7 @@ public class ClearCommand extends Command {
                            disPlayerPanel.panel.setContents(panel.getSlot());
                            disPlayerPanel.displayPlayer();
                        }
+
 
 
                     }

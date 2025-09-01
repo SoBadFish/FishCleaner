@@ -8,6 +8,7 @@ import cn.nukkit.item.Item;
 import cn.nukkit.network.protocol.ContainerOpenPacket;
 import cn.nukkit.network.protocol.RemoveEntityPacket;
 import org.sobadfish.fishclear.ClearMainClass;
+import org.sobadfish.fishclear.command.ClearCommand;
 import org.sobadfish.fishclear.manager.TrashManager;
 import org.sobadfish.fishclear.windows.DisPlayerPanel;
 import org.sobadfish.fishclear.windows.items.BasePlayPanelItemInstance;
@@ -45,6 +46,8 @@ public class ChestInventoryPanel extends DoubleChestFakeInventory implements Inv
         }
         this.panel = m;
     }
+
+
 
     public void setPage(int page) {
         this.page = page;
@@ -93,7 +96,7 @@ public class ChestInventoryPanel extends DoubleChestFakeInventory implements Inv
         pk.eid = id;
         who.dataPacket(pk);
         super.onClose(who);
-        DisPlayerPanel.panelLib.remove(who);
+//        DisPlayerPanel.panelLib.remove(who.getName());
 
     }
 
@@ -107,15 +110,30 @@ public class ChestInventoryPanel extends DoubleChestFakeInventory implements Inv
         super.onSlotChange(index, before, send);
         TrashManager.TrashInventory tr = ClearMainClass.trashManager.trashInventories.get(page);
         tr.update(this);
-        for(Map.Entry<Player,DisPlayerPanel> pe: DisPlayerPanel.panelLib.entrySet()){
+//        System.out.println("测试刷新机制..");
+        for(Map.Entry<String,DisPlayerPanel> pe: DisPlayerPanel.panelLib.entrySet()){
             ChestInventoryPanel pc = pe.getValue().panel;
+//            System.out.println("pc: "+pc.slots);
+
+//            DisPlayerPanel disPlayerPanel = pe.getValue();
+//            disPlayerPanel.getInventory().setContents(getContents());
+//            disPlayerPanel.getInventory().sendContents(disPlayerPanel.getInventory().getViewers());
             if(pc.page == this.page){
+//                System.out.println("尝试刷新: "+pc.slots);
 //                if(pc != this) {
                 tr.inventory.setContents(getContents());
-                pc.sendContents(pe.getKey());
+                tr.inventory.sendContents(tr.inventory.getViewers());
+                if(!send){
+                    pc.setContents(getContents());
+                    pc.sendContents(pc.getPlayer());
+                }
+
+                pc.sendContents(pc.getPlayer());
 //                }
             }
         }
+        //更新玩家页面
+
     }
 
     //    public void onUpdate(Player player){

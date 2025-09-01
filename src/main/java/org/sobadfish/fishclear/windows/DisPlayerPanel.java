@@ -4,6 +4,7 @@ import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.inventory.Inventory;
 import cn.nukkit.inventory.InventoryHolder;
+import org.sobadfish.fishclear.manager.TrashManager;
 import org.sobadfish.fishclear.windows.lib.AbstractFakeInventory;
 import org.sobadfish.fishclear.windows.lib.ChestInventoryPanel;
 
@@ -23,29 +24,24 @@ public class DisPlayerPanel implements InventoryHolder {
 
     public ChestInventoryPanel panel;
 
-    public static LinkedHashMap<Player,DisPlayerPanel> panelLib = new LinkedHashMap<>();
+    public static LinkedHashMap<String,DisPlayerPanel> panelLib = new LinkedHashMap<>();
 
     private DisPlayerPanel(){
     }
 
 
 
-    public static DisPlayerPanel getDisPlayPanel(Player player,String name,int index,Class<? extends ChestInventoryPanel> tClass){
-        try {
-            DisPlayerPanel panel;
-            if(!panelLib.containsKey(player)){
-                panelLib.put(player,new DisPlayerPanel());
-            }
-            panel = panelLib.get(player);
 
-            Constructor<?> tConstructor = tClass.getConstructor(Player.class,InventoryHolder.class,String.class);
-            panel.panel = (ChestInventoryPanel) tConstructor.newInstance(player,panel,name);
-            panel.panel.setPage(index);
-            return panel;
-        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+    public static DisPlayerPanel getDisPlayPanel(Player player,String name,int index,Class<? extends ChestInventoryPanel> tClass){
+        DisPlayerPanel panel;
+        if(!panelLib.containsKey(player.getName())){
+            panelLib.put(player.getName(),new DisPlayerPanel());
         }
-        return null;
+        panel = panelLib.get(player.getName());
+
+        panel.panel = new ChestInventoryPanel(player,panel,name);
+        panel.panel.setPage(index);
+        return panel;
     }
 
 

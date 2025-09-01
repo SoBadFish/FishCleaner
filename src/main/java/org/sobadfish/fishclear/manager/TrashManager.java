@@ -2,6 +2,7 @@ package org.sobadfish.fishclear.manager;
 
 
 import cn.nukkit.Player;
+import cn.nukkit.inventory.InventoryHolder;
 import cn.nukkit.item.Item;
 import org.sobadfish.fishclear.ClearMainClass;
 import org.sobadfish.fishclear.windows.DisPlayerPanel;
@@ -21,10 +22,10 @@ public class TrashManager {
 
     public static void clear(int index){
         ClearMainClass.trashManager.trashInventories.get(index).inventory.clearAll();
-        for(Map.Entry<Player, DisPlayerPanel> pe: DisPlayerPanel.panelLib.entrySet()){
+        for(Map.Entry<String, DisPlayerPanel> pe: DisPlayerPanel.panelLib.entrySet()){
             ChestInventoryPanel pc = pe.getValue().panel;
             pc.slots.putAll(ClearMainClass.trashManager.trashInventories.get(index).getSlot());
-            pc.sendContents(pe.getKey());
+            pc.sendContents(pc.getPlayer());
 
         }
     }
@@ -60,6 +61,8 @@ public class TrashManager {
 
     public static class TrashInventory{
         public DoubleChestFakeInventory inventory = new DoubleChestFakeInventory(null);
+
+
 
 
         public Map<Integer,Item> getSlot(){
