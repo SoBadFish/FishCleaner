@@ -1,5 +1,6 @@
 package org.sobadfish.fishclear;
 
+import cn.nukkit.Achievement;
 import cn.nukkit.plugin.PluginBase;
 import cn.nukkit.utils.TextFormat;
 import org.sobadfish.fishclear.command.ClearCommand;
@@ -41,9 +42,13 @@ public class ClearMainClass extends PluginBase {
         mainClass = this;
         saveDefaultConfig();
         reloadConfig();
+
         PLUGIN_CMD = getConfig().getString("plugin-cmd","fcl");
+
         checkServer();
+
         long t1 = System.currentTimeMillis();
+
         TITLE = formatString(getConfig().getString("plugin-title"));
         clearSettingControl = ClearSettingControl.loadConfig(getConfig());
         messageSettingControl = MessageSettingControl.loadConfig(getConfig());
@@ -51,13 +56,15 @@ public class ClearMainClass extends PluginBase {
         trashSettingControl = TrashSettingControl.loadConfig(getConfig());
         clearItemLimitControl = ClearItemLimitControl.loadConfig(getConfig());
         trashManager = new TrashManager(trashSettingControl.size);
+
+        Achievement.add("FishClear_TFF", new Achievement("这是？垃圾桶？..不！这是宝箱！")); //首次从垃圾桶拿东西
+        Achievement.add("FishClear_WIS", new Achievement("浪费是可耻的！", "FishClear_TFF")); //从垃圾桶拿东西时概率触发
+
         this.getServer().getPluginManager().registerEvents(new ClearListener(),this);
         this.getServer().getCommandMap().register("clear",new ClearCommand(PLUGIN_CMD,"清道夫主指令"));
         this.getServer().getScheduler().scheduleRepeatingTask(this,new ClearRunnable(this),20);
 
-
         this.getLogger().info(TITLE+" 插件启动完成 用时: "+(System.currentTimeMillis() - t1)+" ms");
-
     }
 
     public static String formatString(String msg){
