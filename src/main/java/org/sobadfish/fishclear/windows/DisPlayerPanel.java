@@ -1,8 +1,10 @@
 package org.sobadfish.fishclear.windows;
 
 import cn.nukkit.Player;
+import cn.nukkit.Server;
 import cn.nukkit.inventory.Inventory;
 import cn.nukkit.inventory.InventoryHolder;
+import org.sobadfish.fishclear.ClearMainClass;
 import org.sobadfish.fishclear.manager.TrashManager;
 
 
@@ -47,7 +49,13 @@ public class DisPlayerPanel implements InventoryHolder {
 //        panel.id = ++Entity.entityCount;
 //        inventory = panel;
 //        panel.inventory.getViewers().g.addWindow(panel);
-        player.addWindow(panel.inventory);
+        Server.getInstance().getScheduler().scheduleDelayedTask(ClearMainClass.mainClass, new Runnable() {
+            @Override
+            public void run() {
+                player.addWindow(panel.inventory);
+            }
+        },5);
+
 
     }
 
