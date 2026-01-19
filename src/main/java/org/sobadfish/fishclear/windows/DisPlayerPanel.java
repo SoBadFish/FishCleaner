@@ -47,6 +47,7 @@ public class DisPlayerPanel implements InventoryHolder {
 //        panel.id = ++Entity.entityCount;
 //        inventory = panel;
 //        panel.inventory.getViewers().g.addWindow(panel);
+        player.addWindow(panel.inventory);
 
     }
 

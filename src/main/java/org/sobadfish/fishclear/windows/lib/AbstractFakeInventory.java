@@ -31,7 +31,13 @@ public abstract class AbstractFakeInventory extends ContainerInventory {
 
     AbstractFakeInventory(InventoryType type, InventoryHolder holder, String title) {
         super(holder, type);
+
         this.title = title == null ? type.getDefaultTitle() : title;
+    }
+
+    @Override
+    public String getName() {
+        return title;
     }
 
     @Override

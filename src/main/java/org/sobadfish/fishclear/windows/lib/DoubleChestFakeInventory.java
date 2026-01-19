@@ -22,9 +22,7 @@ import java.util.List;
  * @author SupermeMortal*/
 public class DoubleChestFakeInventory extends ChestFakeInventory{
 
-    public DoubleChestFakeInventory(InventoryHolder holder) {
-        this(holder, null);
-    }
+
 
     public DoubleChestFakeInventory(InventoryHolder holder, String title) {
         super(InventoryType.DOUBLE_CHEST, holder, title);
