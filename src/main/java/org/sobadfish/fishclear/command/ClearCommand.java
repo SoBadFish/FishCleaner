@@ -60,7 +60,7 @@ public class ClearCommand extends Command {
                     }
 
                     if(commandSender instanceof Player){
-                        TrashManager.TrashInventory panel = ClearMainClass.trashManager.get(page - 1);
+                        TrashManager.TrashInventory panel = ClearMainClass.trashManager.get(page );
                         if(panel != null){
                             DisPlayerPanel disPlayerPanel = DisPlayerPanel.getDisPlayPanel((Player) commandSender, panel);
                             disPlayerPanel.panel.inventory.setContents(panel.getSlot());
