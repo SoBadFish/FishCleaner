@@ -20,8 +20,8 @@ import it.unimi.dsi.fastutil.objects.ObjectList;
 import org.sobadfish.fishclear.ClearMainClass;
 import org.sobadfish.fishclear.config.OtherSettingControl;
 import org.sobadfish.fishclear.entity.FakeEntityItem;
+import org.sobadfish.fishclear.manager.TrashManager;
 import org.sobadfish.fishclear.windows.items.BasePlayPanelItemInstance;
-import org.sobadfish.fishclear.windows.lib.ChestInventoryPanel;
 
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -102,22 +102,24 @@ public class ClearListener implements Listener {
         Item putToPlayer = null;
         for (InventoryAction action : transaction.getActions()) {
             for (Inventory inventory : transaction.getInventories()) {
-                if (inventory instanceof ChestInventoryPanel chestInventoryPanel) {
+                if (inventory instanceof TrashManager.TrashInventory chestInventoryPanel) {
                     Item i = action.getSourceItem();
-                    if (i.hasCompoundTag()) {
-                        if (i.getNamedTag().contains("index") && i.getNamedTag().contains("button")) {
-                            event.setCancelled();
-                            int index = i.getNamedTag().getInt("index");
-                            BasePlayPanelItemInstance item = chestInventoryPanel.getPanel().getOrDefault(index, null);
-                            if (item != null) {
-                                chestInventoryPanel.clickSolt = index;
-                                item.onClick(chestInventoryPanel, player);
-                                chestInventoryPanel.update();
-                            }
-                        }
+//                    if (i.hasCompoundTag()) {
+//                        if (i.getNamedTag().contains("index") && i.getNamedTag().contains("button")) {
+//                            event.setCancelled();
+//                            int index = i.getNamedTag().getInt("index");
+//                            BasePlayPanelItemInstance item = chestInventoryPanel.inventory.slots.values().getOrDefault(index, null);
+//                            if (item != null) {
+//                                chestInventoryPanel.clickSolt = index;
+//                                item.onClick(chestInventoryPanel, player);
+//                                chestInventoryPanel.update();
+//                            }
+//                        }
+//
+//                    } else
 
-                    } else if (action instanceof SlotChangeAction slotChangeAction) {
-                        if (slotChangeAction.getInventory() instanceof ChestInventoryPanel) {
+                        if (action instanceof SlotChangeAction slotChangeAction) {
+                        if (slotChangeAction.getInventory() instanceof TrashManager.TrashInventory) {
                             if (!i.isNull() && action.getTargetItem().isNull()) {
                                 getFromChest = i.clone();
                             } else if (i.isNull() && !action.getTargetItem().isNull()) {
@@ -143,7 +145,7 @@ public class ClearListener implements Listener {
             getItems.remove(putToChest);
         }
         Optional<Inventory> topWindow = transaction.getSource().getTopWindow();
-        if (getItems.contains(putToPlayer) && topWindow.isPresent() && topWindow.get() instanceof ChestInventoryPanel) {
+        if (getItems.contains(putToPlayer) && topWindow.isPresent() && topWindow.get() instanceof TrashManager.TrashInventory) {
             getItems.remove(putToPlayer);
             if (ThreadLocalRandom.current().nextInt(100) < 5) {
                 player.awardAchievement("FishClear_WIS");

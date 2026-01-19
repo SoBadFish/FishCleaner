@@ -1,16 +1,11 @@
 package org.sobadfish.fishclear.windows;
 
 import cn.nukkit.Player;
-import cn.nukkit.entity.Entity;
 import cn.nukkit.inventory.Inventory;
 import cn.nukkit.inventory.InventoryHolder;
 import org.sobadfish.fishclear.manager.TrashManager;
-import org.sobadfish.fishclear.windows.lib.AbstractFakeInventory;
-import org.sobadfish.fishclear.windows.lib.ChestInventoryPanel;
 
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedHashMap;
 
 /**
@@ -20,9 +15,9 @@ import java.util.LinkedHashMap;
  */
 public class DisPlayerPanel implements InventoryHolder {
 
-    private AbstractFakeInventory inventory;
+    public Player player;
 
-    public ChestInventoryPanel panel;
+    public TrashManager.TrashInventory  panel;
 
     public static LinkedHashMap<String,DisPlayerPanel> panelLib = new LinkedHashMap<>();
 
@@ -32,24 +27,26 @@ public class DisPlayerPanel implements InventoryHolder {
 
 
 
-    public static DisPlayerPanel getDisPlayPanel(Player player,String name,int index,Class<? extends ChestInventoryPanel> tClass){
+
+    public static DisPlayerPanel getDisPlayPanel(Player player, TrashManager.TrashInventory inventory){
         DisPlayerPanel panel;
         if(!panelLib.containsKey(player.getName())){
             panelLib.put(player.getName(),new DisPlayerPanel());
         }
         panel = panelLib.get(player.getName());
+        panel.player = player;
 
-        panel.panel = new ChestInventoryPanel(player,panel,name);
-        panel.panel.setPage(index);
+        panel.panel = inventory;
+//        panel.panel.setPage(index);
         return panel;
     }
 
 
 
     public void displayPlayer(){
-        panel.id = ++Entity.entityCount;
-        inventory = panel;
-        panel.getPlayer().addWindow(panel);
+//        panel.id = ++Entity.entityCount;
+//        inventory = panel;
+//        panel.inventory.getViewers().g.addWindow(panel);
 
     }
 
@@ -57,7 +54,7 @@ public class DisPlayerPanel implements InventoryHolder {
 
     @Override
     public Inventory getInventory() {
-        return inventory;
+        return panel.inventory;
     }
 
 

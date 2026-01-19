@@ -1,10 +1,8 @@
 package org.sobadfish.fishclear.windows.items;
 
 import cn.nukkit.Player;
-import cn.nukkit.form.element.ElementButton;
 import cn.nukkit.item.Item;
-import cn.nukkit.nbt.tag.CompoundTag;
-import org.sobadfish.fishclear.windows.lib.ChestInventoryPanel;
+import org.sobadfish.fishclear.manager.TrashManager;
 
 
 /**
@@ -25,7 +23,7 @@ public abstract class BasePlayPanelItemInstance {
      * @param player 玩家
      *
      * */
-    public abstract void onClick(ChestInventoryPanel inventory, Player player);
+    public abstract void onClick(TrashManager.TrashInventory inventory, Player player);
 
     /**
      * 箱子菜单展示物品

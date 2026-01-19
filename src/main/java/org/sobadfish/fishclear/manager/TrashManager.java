@@ -1,12 +1,10 @@
 package org.sobadfish.fishclear.manager;
 
 
-import cn.nukkit.Player;
 import cn.nukkit.inventory.InventoryHolder;
 import cn.nukkit.item.Item;
 import org.sobadfish.fishclear.ClearMainClass;
 import org.sobadfish.fishclear.windows.DisPlayerPanel;
-import org.sobadfish.fishclear.windows.lib.ChestInventoryPanel;
 import org.sobadfish.fishclear.windows.lib.DoubleChestFakeInventory;
 
 import java.util.ArrayList;
@@ -23,9 +21,11 @@ public class TrashManager {
     public static void clear(int index){
         ClearMainClass.trashManager.trashInventories.get(index).inventory.clearAll();
         for(Map.Entry<String, DisPlayerPanel> pe: DisPlayerPanel.panelLib.entrySet()){
-            ChestInventoryPanel pc = pe.getValue().panel;
-            pc.slots.putAll(ClearMainClass.trashManager.trashInventories.get(index).getSlot());
-            pc.sendContents(pc.getPlayer());
+            TrashInventory pc = pe.getValue().panel;
+            pc.inventory.clearAll();
+//            pc.inventory.
+//            pc.putAll(ClearMainClass.trashManager.trashInventories.get(index).getSlot());
+            pc.inventory.sendContents(pc.inventory.getViewers());
 
         }
     }
@@ -45,7 +45,10 @@ public class TrashManager {
 
     public TrashManager(int size){
         for(int i = 0;i < size;i++){
-            trashInventories.add(new TrashInventory());
+            trashInventories.add(new TrashInventory(
+                    ClearMainClass.messageSettingControl.message.variable.trashTitle
+                            .replace("${page}",(size+1)+""),null
+            ));
         }
     }
 
@@ -60,9 +63,12 @@ public class TrashManager {
     }
 
     public static class TrashInventory{
-        public DoubleChestFakeInventory inventory = new DoubleChestFakeInventory(null);
+        public DoubleChestFakeInventory inventory;
 
 
+        public TrashInventory(String title, InventoryHolder inventoryHolder){
+            inventory = new DoubleChestFakeInventory(inventoryHolder,title);
+        }
 
 
         public Map<Integer,Item> getSlot(){

@@ -4,11 +4,9 @@ import cn.nukkit.Player;
 import cn.nukkit.command.Command;
 import cn.nukkit.command.CommandSender;
 import org.sobadfish.fishclear.ClearMainClass;
-import org.sobadfish.fishclear.config.OtherSettingControl;
 import org.sobadfish.fishclear.manager.ClearManager;
 import org.sobadfish.fishclear.manager.TrashManager;
 import org.sobadfish.fishclear.windows.DisPlayerPanel;
-import org.sobadfish.fishclear.windows.lib.ChestInventoryPanel;
 
 /**
  * @author Sobadfish
@@ -62,13 +60,15 @@ public class ClearCommand extends Command {
                     }
 
                     if(commandSender instanceof Player){
-                        TrashManager.TrashInventory panel = ClearMainClass.trashManager.trashInventories.get(page);
-                        DisPlayerPanel disPlayerPanel = DisPlayerPanel.getDisPlayPanel((Player) commandSender,ClearMainClass.messageSettingControl.message.variable.trashTitle
-                                .replace("${page}",(page+1)+""),page, ChestInventoryPanel.class);
-                       if(disPlayerPanel != null){
-                           disPlayerPanel.panel.setContents(panel.getSlot());
-                           disPlayerPanel.displayPlayer();
-                       }
+                        TrashManager.TrashInventory panel = ClearMainClass.trashManager.get(page - 1);
+                        if(panel != null){
+                            DisPlayerPanel disPlayerPanel = DisPlayerPanel.getDisPlayPanel((Player) commandSender, panel);
+                            disPlayerPanel.panel.inventory.setContents(panel.getSlot());
+                            disPlayerPanel.displayPlayer();
+                        }else{
+                            commandSender.sendMessage(ClearMainClass.TITLE+ClearMainClass.formatString("&c 垃圾桶不存在"+page+"页"));
+                        }
+
 
 
                     }
