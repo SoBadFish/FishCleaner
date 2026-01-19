@@ -3,6 +3,7 @@ package org.sobadfish.fishclear.windows.lib;
 import cn.nukkit.Player;
 import cn.nukkit.block.BlockID;
 import cn.nukkit.blockentity.BlockEntity;
+import cn.nukkit.inventory.BaseInventory;
 import cn.nukkit.inventory.InventoryHolder;
 import cn.nukkit.inventory.InventoryType;
 import cn.nukkit.level.GlobalBlockPalette;
@@ -23,20 +24,21 @@ import java.util.List;
  * @author SupermeMortal*/
 public class ChestFakeInventory extends AbstractFakeInventory{
 
-    private String name;
+    private final String title;
 
     ChestFakeInventory(InventoryType type, InventoryHolder holder, String title) {
         super(type, holder, title);
+        this.title = title;
     }
 
     @Override
     public String getName() {
-        return name;
+        return title;
     }
 
-    protected void setName(String name) {
-        this.name = name;
-    }
+//    protected void setName(String name) {
+//        this.name = name;
+//    }
 
     @Override
     protected List<BlockVector3> onOpenBlock(Player who) {
